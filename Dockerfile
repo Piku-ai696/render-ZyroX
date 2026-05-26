@@ -10,5 +10,5 @@ COPY . .
 
 CMD ["python", "1.py"]
 
-CMD ["python", "2.py"]
+
 
