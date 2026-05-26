@@ -12,7 +12,7 @@ BASE_URL = "https://hianime.ad"
 
 def run_az_discovery():
     print("🧹 Syncing existing IDs for deduplication...")
-    existing_data = supabase.table("1").select("id").execute()
+    existing_data = supabase.table("16").select("id").execute()
     existing_ids = {row['id'] for row in existing_data.data}
 
     with sync_playwright() as p:
@@ -23,7 +23,7 @@ def run_az_discovery():
         # Optimize speed
         page.route("**/*.{png,jpg,jpeg,svg,css,woff2}", lambda route: route.abort())
 
-        for page_num in range(1, 11): 
+        for page_num in range(151, 161): 
             target_url = f"{BASE_URL}/az-list/all?page={page_num}"
             print(f"🌐 Loading: {target_url}")
             
@@ -66,7 +66,7 @@ def run_az_discovery():
 
                     # 4. DB SAVE
                     try:
-                        supabase.table("1").insert({
+                        supabase.table("16").insert({
                             "id": anime_id,
                             "title": title,
                             "s/ep/c": sub_count,
