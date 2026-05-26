@@ -12,7 +12,7 @@ BASE_URL = "https://hianime.ad"
 
 def run_az_discovery():
     print("🧹 Syncing existing IDs for deduplication...")
-    existing_data = supabase.table("1").select("id").execute()
+    existing_data = supabase.table("2").select("id").execute()
     existing_ids = {row['id'] for row in existing_data.data}
 
     with sync_playwright() as p:
@@ -66,7 +66,7 @@ def run_az_discovery():
 
                     # 4. DB SAVE
                     try:
-                        supabase.table("1").insert({
+                        supabase.table("2").insert({
                             "id": anime_id,
                             "title": title,
                             "s/ep/c": sub_count,
