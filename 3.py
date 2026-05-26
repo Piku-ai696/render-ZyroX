@@ -21,7 +21,7 @@ def run_resilient_harvester():
 
         while True:
             # 1. FETCH NEXT TARGET
-            response = supabase.table("1").select("*")\
+            response = supabase.table("10").select("*")\
                 .or_(f"last_updated.is.null,last_updated.neq.{today}")\
                 .limit(1).execute()
 
@@ -104,7 +104,7 @@ def run_resilient_harvester():
             final_sub = sorted(existing_sub + new_sub_entries, key=lambda x: x['number'])
             final_dub = sorted(existing_dub + new_dub_entries, key=lambda x: x['number'])
 
-            supabase.table("1").update({
+            supabase.table("10").update({
                 "s_eps": final_sub,
                 "d_eps": final_dub,
                 "last_updated": today
