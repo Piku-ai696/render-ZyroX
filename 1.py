@@ -23,7 +23,7 @@ def run_az_discovery():
         # Optimize speed
         page.route("**/*.{png,jpg,jpeg,svg,css,woff2}", lambda route: route.abort())
 
-        for page_num in range(1, 11): 
+        for page_num in range(21, 31): 
             target_url = f"{BASE_URL}/az-list/all?page={page_num}"
             print(f"🌐 Loading: {target_url}")
             
