@@ -14,7 +14,7 @@ def run_enrichment_scraper():
     print("🔍 Syncing precisely targeted counts, posters, and descriptions...")
     
     # Fetch targets (adjust your query as needed)
-    response = supabase.table("1").select("id", "title").limit(1000).execute() 
+    response = supabase.table("17").select("id", "title").limit(1000).execute() 
 
     targets = response.data
     if not targets:
@@ -64,7 +64,7 @@ def run_enrichment_scraper():
                 description_text = desc_el.inner_text().strip() if desc_el else None
 
                 # --- DB UPDATE ---
-                supabase.table("1").update({
+                supabase.table("17").update({
                     "poster": poster_url,
                     "description": description_text,
                     "s/ep/c": sub_count,
