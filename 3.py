@@ -42,7 +42,7 @@ def run_resilient_harvester():
 
             if start_ep > max_target_ep:
                 print(f"⏩ {anime_id} already caught up. Marking date.")
-                supabase.table("anime_list").update({"last_updated": today}).eq("id", anime_id).execute()
+                supabase.table("1").update({"last_updated": today}).eq("id", anime_id).execute()
                 continue
 
             print(f"\n📂 Syncing: {anime_id} ({existing_sub}/{sub_count}  {existing_dub}/{dub_count} ) (From Ep {start_ep})")
@@ -55,7 +55,7 @@ def run_resilient_harvester():
                 print(f"  🎬 Scanning Ep {ep_num}...")
 
                 try:
-                    page.goto(target_url, wait_until="domcontentloaded", timeout=20000)
+                    page.goto(target_url, wait_until="domcontentloaded", timeout=1000000)
                     time.sleep(4) # Wait for all server tabs (Sub, Dub, Raw, Hsub) to load
 
                     # --- SUB / HSUB / RAW LOGIC ---
