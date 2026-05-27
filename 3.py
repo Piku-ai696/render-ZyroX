@@ -17,11 +17,11 @@ def run_resilient_harvester():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         context = browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
-        page = context.new_page().
+        page = context.new_page()
 
         while True:
             # 1. FETCH NEXT TARGET
-            response = supabase.table("6").select("*")\
+            response = supabase.table("5").select("*")\
                 .or_(f"last_updated.is.null,last_updated.neq.{today}")\
                 .limit(1).execute()
 
@@ -42,7 +42,7 @@ def run_resilient_harvester():
 
             if start_ep > max_target_ep:
                 print(f"⏩ {anime_id} already caught up. Marking date.")
-                supabase.table("anime_list").update({"last_updated": today}).eq("id", anime_id).execute()
+                supabase.table("5").update({"last_updated": today}).eq("id", anime_id).execute()
                 continue
 
             print(f"\n📂 Syncing: {anime_id} ({existing_sub}/{sub_count}  {existing_dub}/{dub_count} ) (From Ep {start_ep})")
@@ -55,7 +55,7 @@ def run_resilient_harvester():
                 print(f"  🎬 Scanning Ep {ep_num}...")
 
                 try:
-                    page.goto(target_url, wait_until="domcontentloaded", timeout=20000)
+                    page.goto(target_url, wait_until="domcontentloaded", timeout=1000000)
                     time.sleep(4) # Wait for all server tabs (Sub, Dub, Raw, Hsub) to load
 
                     # --- SUB / HSUB / RAW LOGIC ---
@@ -104,7 +104,7 @@ def run_resilient_harvester():
             final_sub = sorted(existing_sub + new_sub_entries, key=lambda x: x['number'])
             final_dub = sorted(existing_dub + new_dub_entries, key=lambda x: x['number'])
 
-            supabase.table("6").update({
+            supabase.table("5").update({
                 "s_eps": final_sub,
                 "d_eps": final_dub,
                 "last_updated": today
