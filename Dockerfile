@@ -8,8 +8,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "1.py"]
-
-CMD ["python", "2.py"]
 
 CMD ["python", "3.py"]
